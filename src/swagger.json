@@ -1,0 +1,311 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "User API Documentation",
+    "description": "User API Documentation for developers",
+    "version": "1.0.0",
+    "contact": {
+      "email": "raphaelfusco.rar@gmail.com"
+    }
+  },
+  "paths": {
+    "/": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Create a new User",
+        "description": "Create a new User following the received data",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "proterties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "name": "Raphael Fusco",
+                  "email": "raphaelfusco.rar@gmail.com"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Operação realizada com sucesso!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "admin": {
+                      "type": "boolean"
+                    },
+                    "id": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "created_at": {
+                      "type": "string"
+                    },
+                    "updated_at": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "admin": false,
+                    "id": "6f8d9ab8-27b4-43c6-8b7c-6d2a15325a72",
+                    "name": "Raphael Fusco",
+                    "email": "raphaelfusco.rar@gmail.com",
+                    "created_at": "2022-25-10T21:48:45.2334",
+                    "updated_at": "2022-25-10T21:48:45.2334"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "E-mail já está sendo utilizado!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "error": "This email is already is use"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["User"],
+        "summary": "List all users",
+        "description": "List all users",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "headers",
+            "required": "true",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Consultado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "proterties": [
+                    {
+                      "id": "string",
+                      "name": "string",
+                      "admin": "boolean",
+                      "email": "string",
+                      "created_at": "Date",
+                      "updated_at": "Date"
+                    }
+                  ],
+                  "example": [
+                    {
+                      "admin": false,
+                      "id": "6f8d9ab8-27b4-43c6-8b7c-6d2a15325a72",
+                      "name": "Raphael Fusco",
+                      "email": "raphaelfusco.rar@gmail.com",
+                      "created_at": "2022-25-10T21:48:45.2334",
+                      "updated_at": "2022-25-10T21:48:45.2334"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Usuário não existe ou sem permissão",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "proterties": {
+                    "error": "string"
+                  },
+                  "example": [
+                    {
+                      "error": "User does not exists!"
+                    },
+                    {
+                      "error": "User have no permission to list all users!"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/:user_id": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Get User",
+        "description": "Get specific user by id",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "parms",
+            "required": "true"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Usuário encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "admin": {
+                      "type": "boolean"
+                    },
+                    "id": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "created_at": {
+                      "type": "string"
+                    },
+                    "updated_at": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "admin": false,
+                    "id": "6f8d9ab8-27b4-43c6-8b7c-6d2a15325a72",
+                    "name": "Raphael Fusco",
+                    "email": "raphaelfusco.rar@gmail.com",
+                    "created_at": "2022-25-10T21:48:45.2334",
+                    "updated_at": "2022-25-10T21:48:45.2334"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Usuário não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "error": "User does not exists!"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/:user_id/admin": {
+      "patch": {
+        "tags": ["User"],
+        "summary": "Elevate a user",
+        "description": "Elevate a user to admin",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "parms",
+            "required": "true"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Usuário atualizado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "admin": {
+                      "type": "boolean"
+                    },
+                    "id": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "created_at": {
+                      "type": "string"
+                    },
+                    "updated_at": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "admin": true,
+                    "id": "6f8d9ab8-27b4-43c6-8b7c-6d2a15325a72",
+                    "name": "Raphael Fusco",
+                    "email": "raphaelfusco.rar@gmail.com",
+                    "created_at": "2022-25-10T21:48:45.2334",
+                    "updated_at": "2022-25-10T21:48:45.2334"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Usuário não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "error": "User does not exists!"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
